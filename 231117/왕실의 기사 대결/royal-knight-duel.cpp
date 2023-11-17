@@ -14,14 +14,13 @@ int knight_board[42][42];
 int dx[4]={-1,0,1,0};
 int dy[4]={0,1,0,-1};
 
-int total_damage;
-
 struct Knight{
    int r,c,h,w,k;
    bool alive;
 };
 
 Knight knights[32];
+int power[32];
 
 void make_knightboard(){
    for(int i=1;i<=n;i++){
@@ -61,14 +60,13 @@ void move_damage(int index, int dir){
             if(board[ni][nj]==1) getDamage++;
          }
       }
+      if(index==ii) getDamage=0;
       if(getDamage>=k.k){
-         total_damage+=k.k;
          k.k=0;
          k.alive=false;
       }
       else{
-         total_damage+=getDamage;
-         k.k-=total_damage;
+         k.k-=getDamage;
       }
       knights[ii]=k;
    }
@@ -125,6 +123,7 @@ int main(){
       input_knight.k=k1;
       input_knight.alive=true;
       knights[i]=input_knight;
+      power[i]=k1;
    }
 
    make_knightboard();
@@ -134,6 +133,13 @@ int main(){
       move_knight(cmd1, cmd2);
       make_knightboard();
    }
+   int ans=0;
+   for(int i=1;i<=l;i++){
+      Knight k=knights[i];
+      if(k.alive){
+         ans+=power[i]-k.k;
+      }
+   }
 
-   cout << total_damage << "\n";
+   cout << ans << "\n";
 }
