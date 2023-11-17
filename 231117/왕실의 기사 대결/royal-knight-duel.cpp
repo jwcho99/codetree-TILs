@@ -1,11 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using pii = pair<int,int>;
-// typedef pair<int,int> pii;
-typedef long long ll;
-#define MAX_N 100001
-
 int n,l,q;
 
 int board[42][42];
@@ -74,6 +69,8 @@ void move_damage(int index, int dir){
 
 bool movable(int index, int dir){
    Knight k = knights[index];
+   if(!k.alive) return false;
+
    for(int i=0;i<k.h;i++){
       for(int j=0;j<k.w;j++){
          int ii=k.r+i+dx[dir], jj = k.c+j+dy[dir];
